@@ -20,7 +20,10 @@ from rclpy.node import Node
 
 # ===== TODO: puntos de SU variante: (x [m], y [m], θ [rad]) =====
 PUNTOS = [
-    # (x, y, theta),
+    (2.0, 0.0, 0.0),
+    (2.0, 2.0, math.pi / 2.0),
+    (0.0, 2.0, math.pi),
+    (0.0, 0.0, 0.0),
 ]
 
 L1, L2, L3 = 1.0, 1.0, 1.5     # Λ = diag(λ1, λ2, λ3)
@@ -46,7 +49,44 @@ def ley_control(pose, meta):
     # TODO 2: ¿alcanzado? (TOL_POS y TOL_ANG) -> devolver 0, 0, 0, True
     # TODO 3: ξ = J(φ)⁺ Λ e
     # TODO 4: saturar la NORMA de (u, v) a V_MAX conservando la dirección, y |r| a R_MAX
-    raise NotImplementedError
+    x, y, phi = pose
+    xd, yd, theta_d = meta
+
+    # 1. Erreurs de position dans le repère odom
+    ex = xd - x
+    ey = yd - y
+
+    # Erreur angulaire normalisée dans [-pi, pi]
+    e_theta = envolver(theta_d - phi)
+
+    # 2. Le point est atteint seulement si les DEUX conditions sont vraies
+    if math.hypot(ex, ey) < TOL_POS and abs(e_theta) < TOL_ANG:
+        return 0.0, 0.0, 0.0, True
+
+    # 3. Vitesses proportionnelles dans le repère odom
+    vx_odom = L1 * ex
+    vy_odom = L2 * ey
+
+    # Rotation du repère odom vers le repère du robot : J(phi)^+
+    c = math.cos(phi)
+    s = math.sin(phi)
+
+    u = c * vx_odom + s * vy_odom
+    v = -s * vx_odom + c * vy_odom
+    r = L3 * e_theta
+
+    # 4. Saturation de la NORME linéaire, en conservant la direction
+    vitesse = math.hypot(u, v)
+
+    if vitesse > V_MAX:
+        facteur = V_MAX / vitesse
+        u *= facteur
+        v *= facteur
+
+    # Saturation de la vitesse angulaire
+    r = max(-R_MAX, min(R_MAX, r))
+
+    return u, v, r, False
 
 
 class IrAPuntos(Node):

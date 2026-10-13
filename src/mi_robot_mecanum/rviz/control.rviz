@@ -8,7 +8,7 @@ Panels:
         - /Image2
         - /Odometry1
       Splitter Ratio: 0.5
-    Tree Height: 726
+    Tree Height: 903
 Visualization Manager:
   Class: ""
   Displays:
@@ -144,7 +144,7 @@ Visualization Manager:
         Value: /camara/image
       Value: false
     - Class: rviz_default_plugins/Image
-      Enabled: true
+      Enabled: false
       Max Value: 8
       Median window: 5
       Min Value: 0.6000000238418579
@@ -156,7 +156,7 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /camara/depth_image
-      Value: true
+      Value: false
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
@@ -319,7 +319,7 @@ Window Geometry:
   Hide Right Dock: false
   Image:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000002eb0000040dfc0200000003fb000000100044006900730070006c006100790073010000003f0000035c000000cc00fffffffb0000000a0049006d00610067006500000002dc000000bf0000001700fffffffb0000000a0049006d00610067006501000003a1000000ab0000001700ffffff0000044d0000040d00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000100000000000002eb0000040dfc0200000003fb000000100044006900730070006c006100790073010000003f0000040d000000cc00fffffffb0000000a0049006d00610067006500000003400000008c0000001700fffffffb0000000a0049006d00610067006500000003d20000007a0000001700ffffff0000044d0000040d00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Width: 1854
   X: 66
   Y: 32
