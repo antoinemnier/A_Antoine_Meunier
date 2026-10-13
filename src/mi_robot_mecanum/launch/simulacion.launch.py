@@ -91,6 +91,15 @@ def generate_launch_description():
     )
 
     # TODO (Parte 3): nodo 'cinematica' del paquete mi_mecanum_control, con use_sim_time
+    cinematica = Node(
+        package='mi_mecanum_control',
+        executable='cinematica',
+        parameters=[{
+            'use_sim_time': True,
+        }],
+        output='screen',
+    )
+
 
     rviz_node = Node(
         package='rviz2', executable='rviz2', arguments=['-d', rviz_file],
@@ -99,5 +108,5 @@ def generate_launch_description():
 
     return LaunchDescription([
         DeclareLaunchArgument('rviz', default_value='true'),
-        gazebo, robot_state_publisher, spawn, bridge, rviz_node,   # TODO: agregar cinematica
+        gazebo, robot_state_publisher, spawn, bridge, rviz_node, cinematica   # TODO: agregar cinematica
     ])

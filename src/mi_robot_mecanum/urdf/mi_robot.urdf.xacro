@@ -180,7 +180,7 @@
   <gazebo reference="camara_link">
     <sensor name="astra" type="rgbd_camera">
       <topic>/camara</topic>
-      <gz_frame_id>camara_optica_link</gz_frame_id>
+      <gz_frame_id>camara_link</gz_frame_id>
       <update_rate>30</update_rate>
       <always_on>1</always_on>
       <camera>
